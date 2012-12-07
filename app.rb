@@ -31,6 +31,7 @@ def say(message)
     password: ENV["IRC_PASSWORD"],
     user_name: ENV["IRC_USER"] || 'semaphore',
     room: ENV["IRC_ROOM"],
+    method: ENV["IRC_METHOD"] || 'action',
     # If you can't set -n on the channel, you can have the bot
     # join the channel first to send a message.
     #
@@ -49,7 +50,11 @@ def say(message)
     sleep 7
   end
   puts s.recv 1000
-  putss(s, "PRIVMSG #{config[:room]} :#{message}")
+  if config[:method] == 'action'
+    putss(s,"PRIVMSG #{config[:room]} :\001ACTION #{message}\001")
+  else
+    putss(s, "PRIVMSG #{config[:room]} :#{message}")
+  end
   if config[:join_before_message]
     putss(s, "PART :#{config[:room]}")
   end
@@ -58,7 +63,7 @@ def say(message)
 end
 post '/notify' do
   post = JSON.parse(request.body.read.to_s)
-  say "Build #{post['build_number']} of #{post['project_name']}, on branch #{post['branch_name']} has #{post['result']}. #{post['build_url']}"
+  say "has #{post['result']} build #{post['build_number']} of #{post['project_name']}, on branch #{post['branch_name']}. #{post['build_url']}"
   "Thanks!"
 end
 
