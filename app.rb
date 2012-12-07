@@ -29,7 +29,7 @@ def say(message)
   config = {
     server: ENV["IRC_SERVER"],
     password: ENV["IRC_PASSWORD"],
-    user_name: ENV["IRC_USER"],
+    user_name: ENV["IRC_USER"] || 'semaphore',
     room: ENV["IRC_ROOM"],
     # If you can't set -n on the channel, you can have the bot
     # join the channel first to send a message.
