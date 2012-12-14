@@ -25,11 +25,11 @@ def putss(s, str)
   puts s
 end
 
-def say(message)
+def say_as(user, message)
   config = {
     server: ENV["IRC_SERVER"],
     password: ENV["IRC_PASSWORD"],
-    user_name: ENV["IRC_USER"] || 'semaphore',
+    user_name: ENV["IRC_USER"] || user
     room: ENV["IRC_ROOM"],
     method: ENV["IRC_METHOD"] || 'action',
     # If you can't set -n on the channel, you can have the bot
@@ -61,9 +61,23 @@ def say(message)
   putss(s, "QUIT")
   puts s.gets until s.eof?
 end
-post '/notify' do
+
+post '/semaphore' do
   post = JSON.parse(request.body.read.to_s)
-  say "has #{post['result']} build #{post['build_number']} of #{post['project_name']}, on branch #{post['branch_name']}. #{post['build_url']}"
+  say_as "semaphore", "has #{post['result']} build #{post['build_number']} of #{post['project_name']}, on branch #{post['branch_name']}. #{post['build_url']}"
+  "Thanks!"
+end
+
+post '/newrelic' do
+  if params[:alert]
+    say_as "newrelic", "#{params[:application_name]} got an alert '#{params[:message]}' #{params[:alert_url]}"
+  elsif params[:deployment]
+    say_as "newrelic", "#{params[:application_name]} has been deployed '#{params[:description]}'"
+  else
+    say_as "newrelic", "I got a webhook I didn't understand:"
+    say_as "newrelic", params.to_s
+  end
+
   "Thanks!"
 end
 
