@@ -70,9 +70,9 @@ end
 
 post '/newrelic' do
   if params[:alert]
-    say_as "newrelic", "#{params[:application_name]} got an alert '#{params[:message]}' #{params[:alert_url]}"
+    say_as "newrelic", "#{params[:alert][:application_name]} got an alert '#{params[:alert][:message]}' #{params[:alert][:alert_url]}"
   elsif params[:deployment]
-    say_as "newrelic", "#{params[:application_name]} has been deployed '#{params[:description]}'"
+    say_as "newrelic", "#{params[:alert][:application_name]} has been deployed '#{params[:alert][:description]}'"
   else
     say_as "newrelic", "I got a webhook I didn't understand:"
     say_as "newrelic", params.to_s
