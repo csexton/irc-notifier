@@ -69,6 +69,7 @@ post '/semaphore' do
 end
 
 post '/newrelic' do
+  puts params.to_s
   if params[:alert]
     say_as "newrelic", "#{params[:alert][:application_name]} got an alert '#{params[:alert][:message]}' #{params[:alert][:alert_url]}"
   elsif params[:deployment]
