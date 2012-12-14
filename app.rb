@@ -29,7 +29,7 @@ def say_as(user, message)
   config = {
     server: ENV["IRC_SERVER"],
     password: ENV["IRC_PASSWORD"],
-    user_name: ENV["IRC_USER"] || user
+    user_name: ENV["IRC_USER"] || user,
     room: ENV["IRC_ROOM"],
     method: ENV["IRC_METHOD"] || 'action',
     # If you can't set -n on the channel, you can have the bot
