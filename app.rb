@@ -71,9 +71,11 @@ end
 post '/newrelic' do
   logger.info params.to_s
   if params[:alert]
-    say_as "newrelic", "#{params[:alert]['application_name']} got an alert '#{params[:alert]['message']}'. #{params[:alert]['alert_url']}"
+    alert = JSON.parse params[:alert]
+    say_as "newrelic", "#{alert['application_name']} got an alert '#{alert['message']}'. #{alert['alert_url']}"
   elsif params[:deployment]
-    say_as "newrelic", "#{params[:deployment]['application_name']} has been deployed '#{params[:deployment]['description']}'. #{params[:deployment]['deployment_url']}"
+    deployment = JSON.parse params[:alert]
+    say_as "newrelic", "#{deployment['application_name']} has been deployed '#{deployment['description']}'. #{deployment['deployment_url']}"
   else
     say_as "newrelic", "I got a webhook I didn't understand:"
     say_as "newrelic", params.to_s
