@@ -72,7 +72,7 @@ post '/newrelic' do
   logger.info params.to_s
   if params[:alert]
     alert = JSON.parse params[:alert]
-    say_as "newrelic", "#{alert['application_name']} got an alert '#{alert['message']}'. #{alert['alert_url']}"
+    say_as "newrelic", "#{alert['long_description']}. #{alert['alert_url']}"
   elsif params[:deployment]
     deployment = JSON.parse params[:deployment]
     say_as "newrelic", "#{deployment['application_name']} has been deployed '#{deployment['description']}'. #{deployment['deployment_url']}"
