@@ -74,7 +74,7 @@ post '/newrelic' do
     alert = JSON.parse params[:alert]
     say_as "newrelic", "#{alert['application_name']} got an alert '#{alert['message']}'. #{alert['alert_url']}"
   elsif params[:deployment]
-    deployment = JSON.parse params[:alert]
+    deployment = JSON.parse params[:deployment]
     say_as "newrelic", "#{deployment['application_name']} has been deployed '#{deployment['description']}'. #{deployment['deployment_url']}"
   else
     say_as "newrelic", "I got a webhook I didn't understand:"
