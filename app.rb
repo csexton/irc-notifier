@@ -75,7 +75,7 @@ post '/newrelic' do
     say_as "newrelic", "#{alert['long_description']}. #{alert['alert_url']}"
   elsif params[:deployment]
     deployment = JSON.parse params[:deployment]
-    say_as "newrelic", "#{deployment['application_name']} has been deployed '#{deployment['description']}'. #{deployment['deployment_url']}"
+    say_as "newrelic", "#{deployment['deployed_by']} has deployed #{deployment['application_name']} to revision #{deployment['revision']}. #{deployment['deployment_url']}"
   else
     say_as "newrelic", "I got a webhook I didn't understand:"
     say_as "newrelic", params.to_s
